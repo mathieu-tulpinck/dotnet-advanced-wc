@@ -1,0 +1,49 @@
+﻿@model OrderedProductsViewModel
+
+@{
+    ViewData["Title"] = "Order";
+}
+
+<h2>Order</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderedProducts)
+        {
+            <tr>
+                <td>item.Name</td>
+                <td>item.Description</td>
+                <td>item.Category</td>
+                <td>item.Amount</td>
+                <td>item.Price</td>
+                <td>
+                    @{var subtotal = (item.Amount * item.Price).ToString("C");}
+                    @subtotal
+                </td>
+            </tr>
+        }
+        <tr class="active">
+            <td colspan="5"></td>
+            <td>@ViewBag.Total.ToString("C")</td>
+        </tr>
+    </tbody>
+</table>
+<form asp-action="Bestel">
+    @foreach (var product in Model.OrderedProducts)
+    {
+        <input type="hidden" name="Id" value="@product.Id" />
+        <input type="hidden" name="Amount" value="@product.Amount" />
+    }
+    <input type="submit" value="SendOrder" />
+    <a asp-action="Index" class="btn btn-light">Cancel</a>
+</form>

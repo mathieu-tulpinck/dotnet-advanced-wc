@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,21 +23,45 @@ namespace WC3Oef1.Controllers
             _context = context;
         }
 
-        public async Task<ViewResult> Index(Category category)
+        public async Task<ViewResult> Index(Category? category)
         {
-            //if (category == null) {
-            //    return View();
-            //}
+            if (category == null) {
+                return View();
+            }
 
             var filteredProducts = await _context.Products.Where(p => p.Category == category).OrderBy(p => p.Name).ToListAsync();
 
             var viewModel = new HomeIndexViewModel {
                 Products = filteredProducts,
-                Category = category
+                Category = category.Value
 
             };
 
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Order(OrderedProductsViewModel viewModel)
+        {
+            var order = new List<Product>();
+            var orderedProducts = viewModel.OrderedProducts.Where(p => p.Amount > 0);
+            decimal total = 0;
+
+            foreach (var product in orderedProducts) {
+                var temp = await _context.Products.FindAsync(product.Id);
+                temp.Amount = product.Amount;
+                order.Add(temp);
+                total += temp.Amount * temp.Price;
+            }
+
+            if (!order.Any()) {
+                //return RedirectToAction(nameof(Index), new { category = viewModel.Category });
+            }
+
+            ViewBag.Total = total;
+            return View(order);
+
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

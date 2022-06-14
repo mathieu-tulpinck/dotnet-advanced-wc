@@ -5,7 +5,7 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<form asp-controller="Home" asp-action="Products" method="get">
+<form asp-controller="Home" asp-action="Index" method="get">
     <select asp-for="Category" asp-items="Html.GetEnumSelectList<Category>()">
         <option selected="selected" value="">Kies een categorie...</option>
     </select>
@@ -23,8 +23,7 @@
     }
     else
     {
-        var displayModel = Model.Products.First();
-        <form asp-action="Bestelling" method="post">    
+        <form asp-controller="Home" asp-action="Order" method="post">    
             <table>
                 <thead>
                     <tr>
@@ -35,23 +34,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var modelItem in Model.Products)
+                    @for (int i = 0; i < Model.Products.Count(); i++)
                     {
                         <tr>
-                            <td>@modelItem.Name</td>
-                            <td>@modelItem.Description</td>
-                            <td>@modelItem.Price</td>
+                            <td>@Html.DisplayFor(modelItem => modelItem.Products.ElementAt(i).Name)</td>
+                            <td>@Html.DisplayFor(modelItem => modelItem.Products.ElementAt(i).Description)</td>
+                            <td>@Html.DisplayFor(modelItem => modelItem.Products.ElementAt(i).Price)</td>
                             <td>
                                 <div>
-                                    <input for="@modelItem.Amount" name="@modelItem.Amount" />
-                                    <input name="@modelItem.Id" value="@modelItem.Id" type="hidden" />
+                                    <input asp-for="Products.ElementAt(i).Amount" name="products[@i].Amount"/>
+                                    <input name="products[@i].Id" value="@Model.Products.ElementAt(i).Id" type="hidden" />
                                 </div>
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
-            <div class="form-group">
+            <div>
                 <input type="submit" value="Bestellen" />
                 <input type="hidden" asp-for="Category" />
             </div>
