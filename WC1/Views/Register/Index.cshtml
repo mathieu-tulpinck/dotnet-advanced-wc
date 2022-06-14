@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Registration";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+
+<table class="table-condensed">
+    <tr>
+        <td>
+            <label for="email">E-mail address:</label>
+        </td>
+        <td>
+            <input class="form-control" id="email" type="text" name="email" value="@ViewBag.Email" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label for="client">Mail client: </label>
+        </td>
+        <td>
+            <select class="form-control" id="client" name="mailclient">
+                <option value="1">Microsoft Outlook</option>
+                <option value="2">Outlook Express</option>
+                <option value="3">Thunderbird</option>
+                <option value="0">Other...</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label for="pass">Password:</label>
+        </td>
+        <td>
+            <input class="form-control" type="password" id="pass" name="password" />
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            <input class="btn btn-primary" type="submit" value="Register" />
+            <input class="btn btn-outline-secondary" type="reset" value="Ik heb me bedacht..." />
+        </td>
+    </tr>
+</table>
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </div>
+}

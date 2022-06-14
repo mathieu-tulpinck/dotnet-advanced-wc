@@ -1,0 +1,64 @@
+﻿@model HomeIndexViewModel
+
+@{
+    ViewData["Title"] = "Products";
+}
+<h1>@ViewData["Title"]</h1>
+
+<form asp-controller="Home" asp-action="Products" method="get">
+    <select asp-for="Category" asp-items="Html.GetEnumSelectList<Category>()">
+        <option selected="selected" value="">Kies een categorie...</option>
+    </select>
+    <input type="submit" value="Toon" />
+</form>
+
+
+@if (Model != null)
+{
+    @if (!Model.Products.Any())
+    {
+        <div>
+            Geen producten in deze categorie...
+        </div>
+    }
+    else
+    {
+        var displayModel = Model.Products.First();
+        <form asp-action="Bestelling" method="post">    
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var modelItem in Model.Products)
+                    {
+                        <tr>
+                            <td>@modelItem.Name</td>
+                            <td>@modelItem.Description</td>
+                            <td>@modelItem.Price</td>
+                            <td>
+                                <div>
+                                    <input for="@modelItem.Amount" name="@modelItem.Amount" />
+                                    <input name="@modelItem.Id" value="@modelItem.Id" type="hidden" />
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="form-group">
+                <input type="submit" value="Bestellen" />
+                <input type="hidden" asp-for="Category" />
+            </div>
+        </form>
+    }
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
