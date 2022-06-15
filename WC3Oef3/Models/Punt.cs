@@ -14,8 +14,10 @@ namespace WC3Oef3.Models
         //navigation property
         [ForeignKey("VakId")]
         public Vak Vak { get; set; }
+
         [Display(Name = "Student")]
         public int StudentId { get; set; }
+        // navigation property
         [ForeignKey("StudentId")]
         public Student Student { get; set; }
 

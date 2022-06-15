@@ -6,6 +6,7 @@ namespace WC3Oef3.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
         public string Naam { get; set; }
     }
 }
