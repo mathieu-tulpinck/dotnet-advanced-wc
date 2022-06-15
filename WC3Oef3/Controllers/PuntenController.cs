@@ -55,15 +55,17 @@ namespace WC3Oef3.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,VakId,StudentId,Score")] Punt punt)
+        public async Task<IActionResult> Create([Bind("Id,VakId,StudentId,Score")] Punt punt)
         {
             if (ModelState.IsValid) {
                 _context.Add(punt);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["StudentId"] = new SelectList(_context.Studenten.OrderBy(s => s.Naam), nameof(Student.Id), nameof(Student.Naam), punt.StudentId);
             ViewData["VakId"] = new SelectList(_context.Vakken.OrderBy(v => v.Naam), nameof(Vak.Id), nameof(Vak.Naam), punt.VakId);
+
             return View(punt);
         }
 
