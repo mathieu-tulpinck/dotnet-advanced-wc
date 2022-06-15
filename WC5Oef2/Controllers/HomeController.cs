@@ -19,6 +19,7 @@ namespace WC5Oef2.Controllers
 
         public IActionResult Index()
         {
+
             //var currentUser = await
             //var capturedPokemons = _context.
             return View();

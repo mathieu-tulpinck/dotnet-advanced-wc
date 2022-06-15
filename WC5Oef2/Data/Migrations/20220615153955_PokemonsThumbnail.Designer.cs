@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WC5Oef2.Data;
 
 namespace WC5Oef2.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220615153955_PokemonsThumbnail")]
+    partial class PokemonsThumbnail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -187,23 +189,23 @@ namespace WC5Oef2.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Lives = (byte)32,
+                            Lives = (byte)89,
                             Name = "Pikachu",
-                            Speed = (byte)79
+                            Speed = (byte)16
                         },
                         new
                         {
                             Id = 2,
-                            Lives = (byte)93,
+                            Lives = (byte)0,
                             Name = "Eevee",
-                            Speed = (byte)20
+                            Speed = (byte)2
                         },
                         new
                         {
                             Id = 3,
-                            Lives = (byte)91,
+                            Lives = (byte)64,
                             Name = "Snorlax",
-                            Speed = (byte)28
+                            Speed = (byte)29
                         });
                 });
 

@@ -7,11 +7,12 @@ namespace WC5Oef2.Models
     public class Pokemon
     {
 
-        public Pokemon(string name)
+        public Pokemon(int id, string name)
         {
+            Id = id;
             Name = name;
-            Lives = RandomNumberGenerator.GetInt32(0, 100);
-            Speed = RandomNumberGenerator.GetInt32(0, 100);
+            Lives = (byte)RandomNumberGenerator.GetInt32(1, 100);
+            Speed = (byte)RandomNumberGenerator.GetInt32(1, 100);
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -21,12 +22,14 @@ namespace WC5Oef2.Models
         public string Name { get; set; }
 
         [Range(0, 100)]
-        public int Lives { get; set; }
+        public byte Lives { get; set; }
 
         [Range(0, 100)]
-        public int Speed { get; set; }
+        public byte Speed { get; set; }
+
+        public byte[] Thumbnail { get; set; }
 
         // navigation property
-        public Trainer Trainer { get; set; }
+        public virtual Trainer Trainer { get; set; }
     }
 }

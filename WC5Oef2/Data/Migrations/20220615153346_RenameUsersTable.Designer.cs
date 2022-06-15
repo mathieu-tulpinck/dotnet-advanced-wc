@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WC5Oef2.Data;
 
 namespace WC5Oef2.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220615153346_RenameUsersTable")]
+    partial class RenameUsersTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -171,9 +173,6 @@ namespace WC5Oef2.Data.Migrations
                     b.Property<byte>("Speed")
                         .HasColumnType("tinyint");
 
-                    b.Property<byte[]>("Thumbnail")
-                        .HasColumnType("varbinary(max)");
-
                     b.Property<string>("TrainerId")
                         .HasColumnType("nvarchar(450)");
 
@@ -189,21 +188,21 @@ namespace WC5Oef2.Data.Migrations
                             Id = 1,
                             Lives = (byte)32,
                             Name = "Pikachu",
-                            Speed = (byte)79
+                            Speed = (byte)36
                         },
                         new
                         {
                             Id = 2,
-                            Lives = (byte)93,
+                            Lives = (byte)3,
                             Name = "Eevee",
-                            Speed = (byte)20
+                            Speed = (byte)12
                         },
                         new
                         {
                             Id = 3,
-                            Lives = (byte)91,
+                            Lives = (byte)56,
                             Name = "Snorlax",
-                            Speed = (byte)28
+                            Speed = (byte)69
                         });
                 });
 
