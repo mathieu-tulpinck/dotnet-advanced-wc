@@ -49,7 +49,8 @@ namespace WC5Oef2.Controllers
         [HttpPost]
         public async Task<IActionResult> CaptureRandomPokemon()
         {
-            var random = await _context.Pokemons.FindAsync(RandomNumberGenerator.GetInt32(1, 4));
+            var key = RandomNumberGenerator.GetInt32(1, 4);
+            var random = await _context.Pokemons.FindAsync(key);
             var currentUser = await _userManager.GetUserAsync(User);
             random.Trainer = currentUser;
             await _context.SaveChangesAsync();

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Net.Http;
 using System.Security.Cryptography;
@@ -34,7 +35,11 @@ namespace WC5Oef2.Models
         // navigation property
         [ForeignKey("TrainerId")]
         public Trainer Trainer { get; set; }
+        [HiddenInput]
         public string TrainerId { get; set; }
+
+        [NotMapped]
+        public string TrainerUserName { get => Trainer.UserName; }
 
 
         public static async Task<Pokemon> CreatePokemon(int id, string name)
