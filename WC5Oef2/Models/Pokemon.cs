@@ -8,16 +8,13 @@ namespace WC5Oef2.Models
 {
     public class Pokemon
     {
-
-        private readonly IHttpClientFactory _httpClientFactory;
-
-        public Pokemon(int id, string name, IHttpClientFactory httpClientFactory)
+        private Pokemon(int id, string name, byte[] thumbnail)
         {
             Id = id;
             Name = name;
             Lives = (byte)RandomNumberGenerator.GetInt32(1, 101);
             Speed = (byte)RandomNumberGenerator.GetInt32(1, 101);
-            Thumbnail = await GetThumbnail();
+            Thumbnail = thumbnail;
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -39,9 +36,15 @@ namespace WC5Oef2.Models
         public Trainer Trainer { get; set; }
         public string TrainerId { get; set; }
 
-        public async Task<byte[]> GetThumbnail()
-        {
 
+        public static async Task<Pokemon> CreatePokemon(int id, string name)
+        {
+            using (var client = new HttpClient()) {
+                var bytes = await client.GetByteArrayAsync("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png");
+
+                return new Pokemon(id, name, bytes);
+            }
         }
+
     }
 }

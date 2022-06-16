@@ -32,7 +32,7 @@ namespace WC5Oef2
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddHttpClient("Github", httpClient => {
-                httpClient.BaseAddress = new Uri("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png")
+                httpClient.BaseAddress = new Uri("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon");
             });
 
             services.AddSession();

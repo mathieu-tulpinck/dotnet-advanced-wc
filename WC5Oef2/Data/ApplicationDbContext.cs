@@ -9,6 +9,12 @@ namespace WC5Oef2.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+            //Console.Out.WriteLine("Current ProcessID: " + Process.GetCurrentProcess().Id); //This prints the process id
+            //Console.Out.WriteLine("Waiting for debugger to attach...");
+            //while (!Debugger.IsAttached) {
+            //    Thread.Sleep(100);
+            //}
+            //Console.Out.WriteLine("Debugger attached.");
         }
 
         public DbSet<Pokemon> Pokemons { get; set; }
@@ -21,13 +27,15 @@ namespace WC5Oef2.Data
             builder.Entity<Trainer>().ToTable("Trainers", "dbo");
             builder.Entity<Pokemon>().ToTable("Pokemons", "dbo");
 
+            var pokemon1 = Pokemon.CreatePokemon(1, "Pikachu").Result;
+            var pokemon2 = Pokemon.CreatePokemon(2, "Eevee").Result;
+            var pokemon3 = Pokemon.CreatePokemon(3, "Snorlax").Result;
+
             builder.Entity<Pokemon>().HasData(
-                    new Pokemon(1, "Pikachu"),
-                    new Pokemon(2, "Eevee"),
-                    new Pokemon(3, "Snorlax")
+                pokemon1,
+                pokemon2,
+                pokemon3
             );
         }
-
-
     }
 }
