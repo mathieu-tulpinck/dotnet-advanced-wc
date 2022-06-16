@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using WC5Oef2.Data;
 using WC5Oef2.Models;
@@ -23,8 +26,9 @@ namespace WC5Oef2.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var currentUser = await _userManager.GetUserAsync(User);
-            var capturedPokemons = currentUser.Pokemons;
+            var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var capturedPokemons = await _context.Pokemons.Where(p => p.TrainerId == currentUserId).ToListAsync();
+            //var capturedPokemons = await _context.Trainers.Include(t => t.Pokemons).FirstOrDefaultAsync(t => t.Id == currentUserId);
             //var capturedPokemons = _context.Entry(currentUser).Collection(t => t.Pokemons).Load();
 
             if (capturedPokemons is null) {
@@ -45,8 +49,7 @@ namespace WC5Oef2.Controllers
         [HttpPost]
         public async Task<IActionResult> CaptureRandomPokemon()
         {
-            Random r = new Random();
-            var random = await _context.Pokemons.FindAsync(r.Next(1, 3));
+            var random = await _context.Pokemons.FindAsync(RandomNumberGenerator.GetInt32(1, 4));
             var currentUser = await _userManager.GetUserAsync(User);
             random.Trainer = currentUser;
             await _context.SaveChangesAsync();

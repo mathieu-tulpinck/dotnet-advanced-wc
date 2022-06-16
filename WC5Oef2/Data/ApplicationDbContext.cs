@@ -11,6 +11,9 @@ namespace WC5Oef2.Data
         {
         }
 
+        public DbSet<Pokemon> Pokemons { get; set; }
+        public DbSet<Trainer> Trainers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -25,6 +28,6 @@ namespace WC5Oef2.Data
             );
         }
 
-        public DbSet<Pokemon> Pokemons { get; set; }
+
     }
 }

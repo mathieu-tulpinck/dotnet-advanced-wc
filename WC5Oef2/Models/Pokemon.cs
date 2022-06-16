@@ -1,18 +1,23 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Net.Http;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 
 namespace WC5Oef2.Models
 {
     public class Pokemon
     {
 
-        public Pokemon(int id, string name)
+        private readonly IHttpClientFactory _httpClientFactory;
+
+        public Pokemon(int id, string name, IHttpClientFactory httpClientFactory)
         {
             Id = id;
             Name = name;
-            Lives = (byte)RandomNumberGenerator.GetInt32(1, 100);
-            Speed = (byte)RandomNumberGenerator.GetInt32(1, 100);
+            Lives = (byte)RandomNumberGenerator.GetInt32(1, 101);
+            Speed = (byte)RandomNumberGenerator.GetInt32(1, 101);
+            Thumbnail = await GetThumbnail();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -30,6 +35,13 @@ namespace WC5Oef2.Models
         public byte[] Thumbnail { get; set; }
 
         // navigation property
-        public virtual Trainer Trainer { get; set; }
+        [ForeignKey("TrainerId")]
+        public Trainer Trainer { get; set; }
+        public string TrainerId { get; set; }
+
+        public async Task<byte[]> GetThumbnail()
+        {
+
+        }
     }
 }

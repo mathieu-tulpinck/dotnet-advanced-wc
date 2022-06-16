@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using WC5Oef2.Data;
 using WC5Oef2.Models;
 
@@ -23,12 +24,16 @@ namespace WC5Oef2
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options
-                .UseLazyLoadingProxies()
+                //.UseLazyLoadingProxies()
                 .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
             );
 
             services.AddDefaultIdentity<Trainer>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddHttpClient("Github", httpClient => {
+                httpClient.BaseAddress = new Uri("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png")
+            });
 
             services.AddSession();
 
