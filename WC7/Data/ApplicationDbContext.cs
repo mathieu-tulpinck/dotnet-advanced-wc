@@ -23,7 +23,7 @@ namespace WC7.Data
 
             var movies = new List<Movie> {
                 new Movie(1, "test title 1", 80, "test director 1"),
-                new Movie(2, "test title 2", 80, "test director 2")
+                new Movie(2, "test title 2", 100, "test director 2")
             };
 
             var auditoria = new List<Auditorium> {

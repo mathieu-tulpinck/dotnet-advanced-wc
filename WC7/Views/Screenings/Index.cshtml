@@ -1,4 +1,5 @@
-﻿@model IEnumerable<WC7.Models.Screening>
+﻿@model ScreeningsIndexViewModel
+
 
 @{
     ViewData["Title"] = "Index";
@@ -9,32 +10,39 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Auditorium)
+                Auditorium
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Movie)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["TitleSortParm"]">Title</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Start)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["RankingSortParm"]">Ranking</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.End)
+                Start
+            </th>
+            <th>
+                End
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Screenings) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Auditorium.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Movie.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Movie.Ranking)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Start)

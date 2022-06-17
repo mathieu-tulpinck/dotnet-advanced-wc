@@ -4,6 +4,8 @@ namespace WC7.Models
 {
     public class Auditorium
     {
+        public Auditorium() { }
+
         public Auditorium(int id, int capacity)
         {
             Id = id;

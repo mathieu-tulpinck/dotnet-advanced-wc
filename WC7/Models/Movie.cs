@@ -5,6 +5,8 @@ namespace WC7.Models
 {
     public class Movie
     {
+        public Movie() { }
+
         public Movie(int id, string title, byte ranking, string directorName)
         {
             Id = id;

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WC7.Data;
 using WC7.Extensions;
 using WC7.Models;
+using WC7.ViewModels;
 
 namespace WC7.Controllers
 {
@@ -20,24 +21,64 @@ namespace WC7.Controllers
         }
 
         // GET: Screenings
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            var applicationDbContext = _context.Screenings
+            ViewData["TitleSortParm"] = string.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+            ViewData["RankingSortParm"] = string.IsNullOrEmpty(sortOrder) ? "ranking_desc" : "";
+
+            ScreeningsIndexViewModel viewModel = HttpContext.Session.Get<ScreeningsIndexViewModel>("Screenings");
+
+            if (viewModel is null) {
+                IQueryable<Screening> screenings = _context.Screenings
                 .Include(s => s.Auditorium)
                 .Include(s => s.Movie);
 
-            return View(await applicationDbContext.ToListAsync());
+                switch (sortOrder) {
+                    case "title_desc":
+                        screenings = screenings.OrderByDescending(s => s.Movie.Title);
+                        break;
+                    case "ranking_desc":
+                        screenings = screenings.OrderByDescending(s => s.Movie.Ranking);
+                        break;
+                    default:
+                        screenings = screenings.OrderBy(s => s.Start);
+                        break;
+                }
+
+                viewModel = new ScreeningsIndexViewModel {
+                    Screenings = await screenings.AsNoTracking().ToListAsync()
+                };
+            } else {
+                switch (sortOrder) {
+                    case "title_desc":
+                        viewModel.Screenings = viewModel.Screenings.OrderByDescending(s => s.Movie.Title);
+                        break;
+                    case "ranking_desc":
+                        viewModel.Screenings = viewModel.Screenings.OrderByDescending(s => s.Movie.Ranking);
+                        break;
+                    default:
+                        viewModel.Screenings = viewModel.Screenings.OrderBy(s => s.Start);
+                        break;
+                }
+            }
+
+
+            return View(viewModel);
         }
 
         public async Task<IActionResult> GetTodayScreenings()
         {
-            var todayScreenings = await _context.Screenings
-                .Where(s => s.Start.DayOfYear == DateTime.Now.DayOfYear)
-                .Include(s => s.Auditorium)
-                .Include(s => s.Movie)
-                .ToListAsync();
+            var viewModel = new ScreeningsIndexViewModel {
+                Screenings = await _context.Screenings
+                    .Where(s => s.Start.DayOfYear == DateTime.Now.DayOfYear)
+                    .Include(s => s.Auditorium)
+                    .Include(s => s.Movie)
+                    .ToListAsync()
+            };
 
-            return View(nameof(Index), todayScreenings);
+            HttpContext.Session.Set("Screenings", viewModel);
+
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> GetWeeklyScreenings(int? weekIndex)
@@ -52,14 +93,18 @@ namespace WC7.Controllers
             var endOfWeek = startOfWeek.AddDays(6).AddHours(23).AddMinutes(59).AddSeconds(59);
 
 
-            var weeklyScreenings = await _context.Screenings
-                .Where(s => s.Start >= startOfWeek)
-                .Where(s => s.End <= endOfWeek)
-                .Include(s => s.Auditorium)
-                .Include(s => s.Movie)
-                .ToListAsync();
+            var viewModel = new ScreeningsIndexViewModel {
+                Screenings = await _context.Screenings
+                    .Where(s => s.Start >= startOfWeek)
+                    .Where(s => s.End <= endOfWeek)
+                    .Include(s => s.Auditorium)
+                    .Include(s => s.Movie)
+                    .ToListAsync()
+            };
 
-            return View(nameof(Index), weeklyScreenings);
+            HttpContext.Session.Set("Screenings", viewModel);
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Screenings/Details/5

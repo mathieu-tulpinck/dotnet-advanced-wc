@@ -5,6 +5,8 @@ namespace WC7.Models
 {
     public class Screening
     {
+        public Screening() { }
+
         public Screening(int id, int auditoriumId, int movieId, DateTime start, DateTime end)
         {
             Id = id;
