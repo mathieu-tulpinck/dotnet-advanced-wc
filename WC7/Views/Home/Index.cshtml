@@ -1,0 +1,10 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <a asp-controller="Screenings" asp-action="GetTodayScreenings" class="btn btn-primary">Today's screenings</a>
+    <a asp-controller="Screenings" asp-action="GetWeeklyScreenings" class="btn btn-primary">This week's screenings</a>
+    <a asp-controller="Screenings" asp-action="GetWeeklyScreenings" asp-route-weekIndex="1" class="btn btn-primary">Next week's screenings</a>
+</div>
