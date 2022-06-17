@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
 using WC7.Data;
+using WC7.Models;
 
 namespace WC7
 {
@@ -33,9 +33,12 @@ namespace WC7
 
             services.AddRazorPages();
 
-            services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromSeconds(10);
-            });
+            // Session
+            services.AddSession();
+            services.AddHttpContextAccessor();
+
+            // ShoppingCart
+            services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCart(sp));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

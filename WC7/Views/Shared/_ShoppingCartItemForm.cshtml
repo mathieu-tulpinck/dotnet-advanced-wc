@@ -1,0 +1,5 @@
+﻿<form asp-controller="ShoppingCart" asp-action="AddToShoppingCart" method="post">
+    <input name="Amount" id="Amount" />
+    <input name="ScreeningId" id="ScreeningId" value="@ViewData["ScreeningId"]" type="hidden" />
+    <input type="submit" class="btn btn-primary" value="Submit" />
+</form>

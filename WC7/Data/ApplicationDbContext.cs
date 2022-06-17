@@ -16,6 +16,7 @@ namespace WC7.Data
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Auditorium> Auditoria { get; set; }
         public DbSet<Screening> Screenings { get; set; }
+        public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -27,8 +28,8 @@ namespace WC7.Data
             };
 
             var auditoria = new List<Auditorium> {
-                new Auditorium(1, 1000),
-                new Auditorium(2, 2000)
+                new Auditorium(1, 10),
+                new Auditorium(2, 50)
             };
 
             var t = DateTime.Now;

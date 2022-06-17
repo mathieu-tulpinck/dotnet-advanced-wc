@@ -27,6 +27,7 @@ namespace WC7.Controllers
             ViewData["RankingSortParm"] = string.IsNullOrEmpty(sortOrder) ? "ranking_desc" : "";
 
             ScreeningsIndexViewModel viewModel = HttpContext.Session.Get<ScreeningsIndexViewModel>("Screenings");
+            HttpContext.Session.Clear();
 
             if (viewModel is null) {
                 IQueryable<Screening> screenings = _context.Screenings

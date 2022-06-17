@@ -1,0 +1,31 @@
+﻿@model ShoppingCartViewModel
+
+<h2>Your shopping cart</h2>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Selected amount</th>
+            <th>Screening</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var line in Model.ShoppingCart.ShoppingCartItems)
+        {
+            <tr>
+                <td class="text-center">@line.Amount</td>
+                <td class="text-left">@line.Screening.Id</td>
+                <td>
+                    <a asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-id="@line.Screening.Id">Remove from shopping cart</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="text-center">
+    <a class="btn btn-primary" asp-controller="Order" asp-action="Checkout">Check out now!</a>
+</div>
+
+
+
