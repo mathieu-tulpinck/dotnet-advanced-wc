@@ -35,7 +35,7 @@ namespace WC7.Models
             return new ShoppingCart(context) { ShoppingCartId = cartId }; // Invokes private constructor.
         }
 
-        public void AddToCart(Screening screening, int amount)
+        public void AddToCart(Screening screening, byte amount)
         {
             var shoppingCartItem = _context.ShoppingCartItems.SingleOrDefault(
                 s => s.Screening.Id == screening.Id && s.ShoppingCartId == ShoppingCartId);
@@ -44,7 +44,7 @@ namespace WC7.Models
                 shoppingCartItem = new ShoppingCartItem {
                     ShoppingCartId = ShoppingCartId,
                     Screening = screening,
-                    Amount = 1
+                    Amount = amount
                 };
 
                 _context.ShoppingCartItems.Add(shoppingCartItem);

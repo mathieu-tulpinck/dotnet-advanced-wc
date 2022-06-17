@@ -23,8 +23,14 @@ namespace WC7.Data
             base.OnModelCreating(builder);
 
             var movies = new List<Movie> {
-                new Movie(1, "test title 1", 80, "test director 1"),
-                new Movie(2, "test title 2", 100, "test director 2")
+                //new Movie(1, "test title 1", 80, "test director 1"),
+                //new Movie(2, "test title 2", 100, "test director 2"),
+                new Movie {
+                    Id = 3,
+                    Title = "test title 3",
+                    Ranking = 100,
+                    DirectorName = "test director 3"
+                }
             };
 
             var auditoria = new List<Auditorium> {
@@ -40,8 +46,6 @@ namespace WC7.Data
             var tPlus1WeekPlus2 = tPlus1Week.AddHours(2);
 
             var screenings = new List<Screening> {
-                
-                
                 // Today
                 new Screening(1, auditoria[0].Id, movies[0].Id, t, tPlus2),
                 // This week

@@ -30,12 +30,12 @@ namespace WC7.Controllers
         }
 
         // TODO
-        public RedirectToActionResult AddToShoppingCart(int id)
+        public RedirectToActionResult AddToShoppingCart(int screeningId, byte amount)
         {
-            var selectedScreening = _context.Screenings.FirstOrDefault(s => s.Id == id);
+            var selectedScreening = _context.Screenings.FirstOrDefault(s => s.Id == screeningId);
 
             if (selectedScreening != null) {
-                _shoppingCart.AddToCart(selectedScreening, 1);
+                _shoppingCart.AddToCart(selectedScreening, amount);
             }
 
             return RedirectToAction("Index"); // Redirect using the action name.
