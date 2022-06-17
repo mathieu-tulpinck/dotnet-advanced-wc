@@ -42,13 +42,21 @@ namespace WC7.Controllers
 
         public async Task<IActionResult> GetWeeklyScreenings(int? weekIndex)
         {
-            var startOfWeek = DateTime.Now.StartOfWeek(DayOfWeek.Monday);
+            DateTime t;
+            if (weekIndex != null) {
+                t = DateTime.Now.AddDays((double)weekIndex * 7);
+            } else {
+                t = DateTime.Now;
+            }
+            var startOfWeek = t.StartOfWeek(DayOfWeek.Monday);
             var endOfWeek = startOfWeek.AddDays(6).AddHours(23).AddMinutes(59).AddSeconds(59);
 
 
             var weeklyScreenings = await _context.Screenings
                 .Where(s => s.Start >= startOfWeek)
                 .Where(s => s.End <= endOfWeek)
+                .Include(s => s.Auditorium)
+                .Include(s => s.Movie)
                 .ToListAsync();
 
             return View(nameof(Index), weeklyScreenings);
