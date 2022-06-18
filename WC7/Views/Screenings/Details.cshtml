@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "Details";
-    ViewData["ScreeningId"] = @Model.Id;
 }
 
 <h1>Details</h1>
@@ -35,11 +34,9 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.End)
         </dd>
-        <dt class = "col-sm-2">
-            Buy ticket
-        </dt>
+        <dt class = "col-sm-2"></dt>
         <dd class = "col-sm-10">
-            <partial name="_ShoppingCartItemForm" view-data="ViewData" />
+            <a asp-controller="ShoppingCart" asp-action="GetAddToShoppingCart" asp-route-screeningId="@Model.Id" class="btn btn-primary">Buy tickets</a>
         </dd>
     </dl>
 </div>

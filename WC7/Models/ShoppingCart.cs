@@ -49,31 +49,22 @@ namespace WC7.Models
 
                 _context.ShoppingCartItems.Add(shoppingCartItem);
             } else {
-                shoppingCartItem.Amount++;
+
             }
 
             _context.SaveChanges();
         }
 
-        public int RemoveFromCart(Screening screening)
+        public void RemoveFromCart(Screening screening)
         {
             var shoppingCartItem = _context.ShoppingCartItems.SingleOrDefault(
                 s => s.Screening.Id == screening.Id && s.ShoppingCartId == ShoppingCartId);
 
-            var amount = 0;
-
             if (shoppingCartItem != null) {
-                if (shoppingCartItem.Amount > 1) {
-                    shoppingCartItem.Amount--;
-                    amount = shoppingCartItem.Amount;
-                } else {
-                    _context.ShoppingCartItems.Remove(shoppingCartItem);
-                }
+                _context.ShoppingCartItems.Remove(shoppingCartItem);
             }
 
             _context.SaveChanges();
-
-            return amount;
         }
 
         public List<ShoppingCartItem> GetShoppingCartItems()

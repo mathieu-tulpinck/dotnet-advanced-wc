@@ -8,10 +8,12 @@ namespace WC7.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [Required]
         [ForeignKey("ScreeningId")]
         public Screening Screening { get; set; }
         public int ScreeningId { get; set; }
 
+        [Required]
         [Range(1, 15)]
         public byte Amount { get; set; }
 

@@ -16,7 +16,7 @@
                 <td class="text-center">@line.Amount</td>
                 <td class="text-left">@line.Screening.Id</td>
                 <td>
-                    <a asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-id="@line.Screening.Id">Remove from shopping cart</a>
+                    <a asp-controller="ShoppingCart" asp-action="RemoveFromShoppingCart" asp-route-id="@line.Screening.Id">Remove from shopping cart</a>
                 </td>
             </tr>
         }

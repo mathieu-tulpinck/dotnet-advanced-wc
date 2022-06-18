@@ -7,13 +7,13 @@ namespace WC7.Models
     {
         public Movie() { }
 
-        //public Movie(int id, string title, byte ranking, string directorName)
-        //{
-        //    Id = id;
-        //    Title = title;
-        //    Ranking = ranking;
-        //    DirectorName = directorName;
-        //}
+        public Movie(int id, string title, byte ranking, string directorName)
+        {
+            Id = id;
+            Title = title;
+            Ranking = ranking;
+            DirectorName = directorName;
+        }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

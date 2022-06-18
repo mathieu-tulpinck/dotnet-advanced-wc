@@ -27,7 +27,6 @@ namespace WC7.Controllers
             ViewData["RankingSortParm"] = string.IsNullOrEmpty(sortOrder) ? "ranking_desc" : "";
 
             ScreeningsIndexViewModel viewModel = HttpContext.Session.Get<ScreeningsIndexViewModel>("Screenings");
-            HttpContext.Session.Clear();
 
             if (viewModel is null) {
                 IQueryable<Screening> screenings = _context.Screenings
@@ -77,6 +76,7 @@ namespace WC7.Controllers
                     .ToListAsync()
             };
 
+            HttpContext.Session.Clear();
             HttpContext.Session.Set("Screenings", viewModel);
 
             return RedirectToAction(nameof(Index));
@@ -103,6 +103,7 @@ namespace WC7.Controllers
                     .ToListAsync()
             };
 
+            HttpContext.Session.Clear();
             HttpContext.Session.Set("Screenings", viewModel);
 
             return RedirectToAction(nameof(Index));

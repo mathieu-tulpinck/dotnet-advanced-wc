@@ -29,13 +29,20 @@ namespace WC7.Controllers
             return View(shoppingCartViewModel);
         }
 
-        // TODO
-        public RedirectToActionResult AddToShoppingCart(int screeningId, byte amount)
+        public ViewResult GetAddToShoppingCart(int screeningId)
         {
-            var selectedScreening = _context.Screenings.FirstOrDefault(s => s.Id == screeningId);
+            ViewBag.ScreeningId = screeningId;
+
+            return View();
+        }
+
+        // TODO
+        public RedirectToActionResult AddToShoppingCart([Bind("ScreeningId, Amount")] ShoppingCartItem shoppingCartItem)
+        {
+            var selectedScreening = _context.Screenings.FirstOrDefault(s => s.Id == shoppingCartItem.ScreeningId);
 
             if (selectedScreening != null) {
-                _shoppingCart.AddToCart(selectedScreening, amount);
+                _shoppingCart.AddToCart(selectedScreening, shoppingCartItem.Amount);
             }
 
             return RedirectToAction("Index"); // Redirect using the action name.
