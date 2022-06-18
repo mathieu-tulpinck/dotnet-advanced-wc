@@ -29,6 +29,7 @@
             <th>
                 End
             </th>
+            <th>Available seats</th>
             <th></th>
         </tr>
     </thead>
@@ -49,6 +50,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.End)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItel => item.AvailableSeats)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
