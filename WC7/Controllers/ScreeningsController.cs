@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -21,6 +22,7 @@ namespace WC7.Controllers
         }
 
         // GET: Screenings
+        [AllowAnonymous]
         public async Task<IActionResult> Index(string sortOrder)
         {
             ViewData["TitleSortParm"] = string.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
@@ -66,6 +68,7 @@ namespace WC7.Controllers
             return View(viewModel);
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> GetTodayScreenings()
         {
             var viewModel = new ScreeningsIndexViewModel {
@@ -82,6 +85,7 @@ namespace WC7.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> GetWeeklyScreenings(int? weekIndex)
         {
             DateTime t;
@@ -110,6 +114,7 @@ namespace WC7.Controllers
         }
 
         // GET: Screenings/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null) {
@@ -129,6 +134,7 @@ namespace WC7.Controllers
         }
 
         // GET: Screenings/Create
+        [Authorize(Roles = "admin,staff")]
         public IActionResult Create()
         {
             ViewData["AuditoriumId"] = new SelectList(_context.Auditoria, "Id", "Id");
@@ -140,6 +146,7 @@ namespace WC7.Controllers
         // POST: Screenings/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin,staff")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("AuditoriumId,MovieId,Start,End")] Screening screening)
@@ -158,6 +165,7 @@ namespace WC7.Controllers
         }
 
         // GET: Screenings/Edit/5
+        [Authorize(Roles = "admin,staff")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) {
@@ -178,6 +186,7 @@ namespace WC7.Controllers
         // POST: Screenings/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin,staff")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("AuditoriumId,MovieId,Start,End")] Screening screening)
@@ -207,6 +216,7 @@ namespace WC7.Controllers
         }
 
         // GET: Screenings/Delete/5
+        [Authorize(Roles = "admin,staff")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) {
@@ -226,6 +236,7 @@ namespace WC7.Controllers
         }
 
         // POST: Screenings/Delete/5
+        [Authorize(Roles = "admin,staff")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

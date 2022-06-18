@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using WC7.Data;
 using WC7.Models;
@@ -6,6 +7,7 @@ using WC7.ViewModels;
 
 namespace WC7.Controllers
 {
+    [Authorize(Roles = "admin,staff,user")]
     public class ShoppingCartController : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -27,6 +27,7 @@ namespace WC7
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllersWithViews();
@@ -39,6 +40,7 @@ namespace WC7
 
             // ShoppingCart
             services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCart(sp));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

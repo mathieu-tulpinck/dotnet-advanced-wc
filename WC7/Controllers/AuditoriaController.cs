@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using WC7.Models;
 
 namespace WC7.Controllers
 {
+    [Authorize(Roles = "admin,staff")]
     public class AuditoriaController : Controller
     {
         private readonly ApplicationDbContext _context;
