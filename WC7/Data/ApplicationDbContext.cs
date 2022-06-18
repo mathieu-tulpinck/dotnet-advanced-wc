@@ -47,11 +47,11 @@ namespace WC7.Data
 
             var screenings = new List<Screening> {
                 // Today
-                new Screening(1, auditoria[0].Id, movies[0].Id, t, tPlus2),
+                new Screening(1, auditoria[0].Id, movies[0].Id, t, tPlus2, auditoria[0].Capacity),
                 // This week
-                new Screening(2, auditoria[1].Id, movies[1].Id, tPlus1Day, tPlus1DayPlus2),
+                new Screening(2, auditoria[1].Id, movies[1].Id, tPlus1Day, tPlus1DayPlus2, auditoria[1].Capacity),
                 // Next Week
-                new Screening(3, auditoria[0].Id, movies[1].Id, tPlus1Week, tPlus1WeekPlus2)
+                new Screening(3, auditoria[0].Id, movies[1].Id, tPlus1Week, tPlus1WeekPlus2, auditoria[0].Capacity)
             };
 
             builder.Entity<Movie>().HasData(movies);

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WC7.Data;
 
 namespace WC7.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220618100045_AlterScreenings")]
+    partial class AlterScreenings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -321,27 +323,27 @@ namespace WC7.Data.Migrations
                             Id = 1,
                             AuditoriumId = 1,
                             AvailableSeats = 10,
-                            End = new DateTime(2022, 6, 18, 14, 10, 33, 55, DateTimeKind.Local).AddTicks(9846),
+                            End = new DateTime(2022, 6, 18, 14, 0, 44, 796, DateTimeKind.Local).AddTicks(675),
                             MovieId = 1,
-                            Start = new DateTime(2022, 6, 18, 12, 10, 33, 55, DateTimeKind.Local).AddTicks(9846)
+                            Start = new DateTime(2022, 6, 18, 12, 0, 44, 796, DateTimeKind.Local).AddTicks(675)
                         },
                         new
                         {
                             Id = 2,
                             AuditoriumId = 2,
                             AvailableSeats = 50,
-                            End = new DateTime(2022, 6, 19, 14, 10, 33, 55, DateTimeKind.Local).AddTicks(9846),
+                            End = new DateTime(2022, 6, 19, 14, 0, 44, 796, DateTimeKind.Local).AddTicks(675),
                             MovieId = 2,
-                            Start = new DateTime(2022, 6, 19, 12, 10, 33, 55, DateTimeKind.Local).AddTicks(9846)
+                            Start = new DateTime(2022, 6, 19, 12, 0, 44, 796, DateTimeKind.Local).AddTicks(675)
                         },
                         new
                         {
                             Id = 3,
                             AuditoriumId = 1,
                             AvailableSeats = 10,
-                            End = new DateTime(2022, 6, 25, 14, 10, 33, 55, DateTimeKind.Local).AddTicks(9846),
+                            End = new DateTime(2022, 6, 25, 14, 0, 44, 796, DateTimeKind.Local).AddTicks(675),
                             MovieId = 2,
-                            Start = new DateTime(2022, 6, 25, 12, 10, 33, 55, DateTimeKind.Local).AddTicks(9846)
+                            Start = new DateTime(2022, 6, 25, 12, 0, 44, 796, DateTimeKind.Local).AddTicks(675)
                         });
                 });
 
@@ -352,8 +354,8 @@ namespace WC7.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
+                    b.Property<byte>("Amount")
+                        .HasColumnType("tinyint");
 
                     b.Property<int>("ScreeningId")
                         .HasColumnType("int");

@@ -36,7 +36,7 @@ namespace WC7.Controllers
             return View();
         }
 
-        // TODO
+        // Availability is calculated immediately, not on checkout.
         public RedirectToActionResult AddToShoppingCart([Bind("ScreeningId, Amount")] ShoppingCartItem shoppingCartItem)
         {
             var selectedScreening = _context.Screenings.FirstOrDefault(s => s.Id == shoppingCartItem.ScreeningId);
@@ -54,6 +54,7 @@ namespace WC7.Controllers
 
             if (selectedScreening != null) {
                 _shoppingCart.RemoveFromCart(selectedScreening);
+
             }
             return RedirectToAction("Index");
         }

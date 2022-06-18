@@ -14,8 +14,8 @@ namespace WC7.Models
         public int ScreeningId { get; set; }
 
         [Required]
-        [Range(1, 15)]
-        public byte Amount { get; set; }
+        [Range(1, 15, ErrorMessage = "Please contact our staff to purchase > 15 tickets")]
+        public int Amount { get; set; }
 
         public string ShoppingCartId { get; set; }
     }

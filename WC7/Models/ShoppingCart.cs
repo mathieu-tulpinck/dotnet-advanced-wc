@@ -35,7 +35,7 @@ namespace WC7.Models
             return new ShoppingCart(context) { ShoppingCartId = cartId }; // Invokes private constructor.
         }
 
-        public void AddToCart(Screening screening, byte amount)
+        public void AddToCart(Screening screening, int amount)
         {
             var shoppingCartItem = _context.ShoppingCartItems.SingleOrDefault(
                 s => s.Screening.Id == screening.Id && s.ShoppingCartId == ShoppingCartId);
@@ -48,6 +48,7 @@ namespace WC7.Models
                 };
 
                 _context.ShoppingCartItems.Add(shoppingCartItem);
+                screening.UpdateAvailability(-shoppingCartItem.Amount);
             } else {
 
             }
@@ -62,6 +63,7 @@ namespace WC7.Models
 
             if (shoppingCartItem != null) {
                 _context.ShoppingCartItems.Remove(shoppingCartItem);
+                screening.UpdateAvailability(shoppingCartItem.Amount);
             }
 
             _context.SaveChanges();

@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace WC7.Data.Migrations
 {
@@ -9,16 +9,14 @@ namespace WC7.Data.Migrations
         {
             migrationBuilder.CreateTable(
                 name: "ShoppingCartItems",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ScreeningId = table.Column<int>(nullable: false),
                     Amount = table.Column<byte>(nullable: false),
                     ShoppingCartId = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_ShoppingCartItems", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ShoppingCartItems_Screenings_ScreeningId",
