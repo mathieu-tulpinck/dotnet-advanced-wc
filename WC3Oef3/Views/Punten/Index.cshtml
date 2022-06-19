@@ -24,7 +24,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            if (item.Punten.Any())
+            @if (item.Punten.Any())
             {
                 <tr class="table-secondary">
                     <td colspan="3">

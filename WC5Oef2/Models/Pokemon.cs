@@ -32,16 +32,18 @@ namespace WC5Oef2.Models
 
         public byte[] Thumbnail { get; set; }
 
-        // navigation property
+        // Navigation property.
         [ForeignKey("TrainerId")]
         public Trainer Trainer { get; set; }
         [HiddenInput]
         public string TrainerId { get; set; }
 
+        // Calculated property.
         [NotMapped]
         public string TrainerUserName { get => Trainer.UserName; }
 
 
+        // Factory method.
         public static async Task<Pokemon> CreatePokemon(int id, string name)
         {
             using (var client = new HttpClient()) {

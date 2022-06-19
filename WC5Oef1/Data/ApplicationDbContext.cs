@@ -10,5 +10,14 @@ namespace WC5Oef1.Data
             : base(options)
         {
         }
+
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<ApplicationUser>().ToTable("ApplicationUsers", "dbo");
+        }
     }
 }

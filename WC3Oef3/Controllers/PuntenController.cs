@@ -20,7 +20,10 @@ namespace WC3Oef3.Controllers
         // GET: Punten
         public async Task<IActionResult> Index()
         {
-            var studentenMetPunten = _context.Studenten.Include(s => s.Punten).ThenInclude(p => p.Vak);
+            var studentenMetPunten = _context.Studenten
+                .Include(s => s.Punten)
+                .ThenInclude(p => p.Vak);
+
             return View(await studentenMetPunten.ToListAsync());
         }
 
@@ -111,6 +114,7 @@ namespace WC3Oef3.Controllers
             }
             ViewData["StudentId"] = new SelectList(_context.Studenten.OrderBy(s => s.Naam), nameof(Student.Id), nameof(Student.Naam), punt.StudentId);
             ViewData["VakId"] = new SelectList(_context.Vakken.OrderBy(v => v.Naam), nameof(Vak.Id), nameof(Vak.Naam), punt.VakId);
+
             return View(punt);
         }
 

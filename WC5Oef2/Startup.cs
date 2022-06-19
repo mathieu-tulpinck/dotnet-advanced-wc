@@ -29,6 +29,7 @@ namespace WC5Oef2
             );
 
             services.AddDefaultIdentity<Trainer>(options => options.SignIn.RequireConfirmedAccount = true)
+                //.AddRoles<Trainer>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddHttpClient("Github", httpClient => {

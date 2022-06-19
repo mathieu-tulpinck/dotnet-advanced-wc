@@ -18,7 +18,7 @@ namespace WC7.Components
         public async Task<IViewComponentResult> InvokeAsync()
         {
             if (User.Identity.IsAuthenticated) {
-                _currentUser = _userManager.GetUserAsync(UserClaimsPrincipal).Result;
+                _currentUser = await _userManager.GetUserAsync(UserClaimsPrincipal);
                 var roles = await _userManager.GetRolesAsync(_currentUser);
                 if (roles.ToList().First() == "admin") {
                     ViewBag.Role = "admin";

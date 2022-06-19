@@ -1,10 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using WC7.Data;
 using WC7.Models;
 
@@ -34,12 +32,11 @@ namespace WC7.Controllers.Api
         {
             var screening = await _context.Screenings.FindAsync(id);
 
-            if (screening == null)
-            {
+            if (screening == null) {
                 return NotFound();
             }
 
-            return screening;
+            return Ok(screening);
         }
 
         // PUT: api/Screenings/5
@@ -48,25 +45,18 @@ namespace WC7.Controllers.Api
         [HttpPut("{id}")]
         public async Task<IActionResult> PutScreening(int id, Screening screening)
         {
-            if (id != screening.Id)
-            {
+            if (id != screening.Id) {
                 return BadRequest();
             }
 
             _context.Entry(screening).State = EntityState.Modified;
 
-            try
-            {
+            try {
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ScreeningExists(id))
-                {
+            } catch (DbUpdateConcurrencyException) {
+                if (!ScreeningExists(id)) {
                     return NotFound();
-                }
-                else
-                {
+                } else {
                     throw;
                 }
             }
@@ -91,8 +81,7 @@ namespace WC7.Controllers.Api
         public async Task<ActionResult<Screening>> DeleteScreening(int id)
         {
             var screening = await _context.Screenings.FindAsync(id);
-            if (screening == null)
-            {
+            if (screening == null) {
                 return NotFound();
             }
 

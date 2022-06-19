@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using WC5Oef2.Data;
@@ -24,10 +23,12 @@ namespace WC5Oef2.Controllers
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> CapturedPokemons()
         {
-            var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var capturedPokemons = await _context.Pokemons.Where(p => p.TrainerId == currentUserId).ToListAsync();
+            var currentUserId = _userManager.GetUserId(User);
+            var capturedPokemons = await _context.Pokemons
+                .Where(p => p.TrainerId == currentUserId)
+                .ToListAsync();
             //var capturedPokemons = await _context.Trainers.Include(t => t.Pokemons).FirstOrDefaultAsync(t => t.Id == currentUserId);
             //var capturedPokemons = _context.Entry(currentUser).Collection(t => t.Pokemons).Load();
 
@@ -36,7 +37,9 @@ namespace WC5Oef2.Controllers
                 return RedirectToAction("GetCaptureRandomPokemon");
             }
 
-            var viewModel = new TrainersIndexViewModel { CapturedPokemons = capturedPokemons };
+            var viewModel = new TrainersIndexViewModel {
+                CapturedPokemons = capturedPokemons
+            };
 
             return View(viewModel);
         }
@@ -55,7 +58,20 @@ namespace WC5Oef2.Controllers
             random.Trainer = currentUser;
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("CapturedPokemons");
+        }
+
+        public async Task<IActionResult> Release(int pokemonId)
+        {
+            var pokemon = await _context.Pokemons.FindAsync(pokemonId);
+            if (pokemon is null) {
+                return NotFound();
+            }
+
+            pokemon.TrainerId = null;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(CapturedPokemons));
         }
     }
 }

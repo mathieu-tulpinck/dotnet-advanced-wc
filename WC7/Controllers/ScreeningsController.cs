@@ -29,8 +29,10 @@ namespace WC7.Controllers
             ViewData["RankingSortParm"] = string.IsNullOrEmpty(sortOrder) ? "ranking_desc" : "";
 
             ScreeningsIndexViewModel viewModel = HttpContext.Session.Get<ScreeningsIndexViewModel>("Screenings");
+            bool redirect = HttpContext.Session.Get<bool>("Redirect");
 
-            if (viewModel is null) {
+            if (!redirect) {
+                HttpContext.Session.Clear();
                 IQueryable<Screening> screenings = _context.Screenings
                 .Include(s => s.Auditorium)
                 .Include(s => s.Movie);
@@ -81,6 +83,7 @@ namespace WC7.Controllers
 
             HttpContext.Session.Clear();
             HttpContext.Session.Set("Screenings", viewModel);
+            HttpContext.Session.Set("Redirect", true);
 
             return RedirectToAction(nameof(Index));
         }
@@ -109,6 +112,7 @@ namespace WC7.Controllers
 
             HttpContext.Session.Clear();
             HttpContext.Session.Set("Screenings", viewModel);
+            HttpContext.Session.Set("Redirect", true);
 
             return RedirectToAction(nameof(Index));
         }

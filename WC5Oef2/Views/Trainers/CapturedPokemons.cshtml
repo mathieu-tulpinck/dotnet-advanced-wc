@@ -1,14 +1,11 @@
 ﻿@model TrainersIndexViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Captured pokemons";
 }
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -43,9 +40,8 @@
                 <img src="data:image/png;base64,@Convert.ToBase64String(item.Thumbnail)" />
             </td>
             <td>
-                <a asp-controller="Pokemons" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-controller="Pokemons" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-controller="Pokemons" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-controller="Trainers" asp-action="Release" asp-route-pokemonId="@item.Id">Release</a>
             </td>
         </tr>
 }

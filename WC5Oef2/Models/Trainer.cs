@@ -5,7 +5,7 @@ namespace WC5Oef2.Models
 {
     public class Trainer : IdentityUser
     {
-        // navigation property
+        // Navigation property.
         public ICollection<Pokemon> Pokemons { get; set; }
     }
 }
