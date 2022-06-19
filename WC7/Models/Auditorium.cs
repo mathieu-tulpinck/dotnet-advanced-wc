@@ -6,12 +6,6 @@ namespace WC7.Models
     {
         public Auditorium() { }
 
-        public Auditorium(int id, int capacity)
-        {
-            Id = id;
-            Capacity = capacity;
-        }
-
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 

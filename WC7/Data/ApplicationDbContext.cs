@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -23,19 +24,29 @@ namespace WC7.Data
             base.OnModelCreating(builder);
 
             var movies = new List<Movie> {
-                new Movie(1, "test title 1", 80, "test director 1"),
-                new Movie(2, "test title 2", 100, "test director 2"),
-                //new Movie {
-                //    Id = 3,
-                //    Title = "test title 3",
-                //    Ranking = 100,
-                //    DirectorName = "test director 3"
-                //}
+                new Movie {
+                    Id = 1,
+                    Title = "test title 1",
+                    Ranking = 80,
+                    DirectorName = "test director 1"
+                },
+                new Movie {
+                    Id = 2,
+                    Title = "test title 2",
+                    Ranking = 100,
+                    DirectorName = "test director 2"
+                },
             };
 
             var auditoria = new List<Auditorium> {
-                new Auditorium(1, 10),
-                new Auditorium(2, 50)
+                new Auditorium {
+                    Id = 1,
+                    Capacity = 10
+                },
+                new Auditorium {
+                    Id = 2,
+                    Capacity = 50
+                }
             };
 
             var t = DateTime.Now;
@@ -46,17 +57,52 @@ namespace WC7.Data
             var tPlus1WeekPlus2 = tPlus1Week.AddHours(2);
 
             var screenings = new List<Screening> {
-                // Today
-                new Screening(1, auditoria[0].Id, movies[0].Id, t, tPlus2, auditoria[0].Capacity),
-                // This week
-                new Screening(2, auditoria[1].Id, movies[1].Id, tPlus1Day, tPlus1DayPlus2, auditoria[1].Capacity),
-                // Next Week
-                new Screening(3, auditoria[0].Id, movies[1].Id, tPlus1Week, tPlus1WeekPlus2, auditoria[0].Capacity)
+                // Today.
+                new Screening {
+                    Id = 1,
+                    AuditoriumId = auditoria[0].Id,
+                    MovieId = auditoria[0].Id,
+                    Start = t,
+                    End = tPlus2,
+                    AvailableSeats = auditoria[0].Capacity
+                },
+                // This week.
+                new Screening {
+                    Id = 2,
+                    AuditoriumId = auditoria[1].Id,
+                    MovieId = auditoria[1].Id,
+                    Start = tPlus1Day,
+                    End = tPlus1DayPlus2,
+                    AvailableSeats = auditoria[1].Capacity
+                },
+                // Next week.
+                new Screening {
+                    Id = 3,
+                    AuditoriumId = auditoria[0].Id,
+                    MovieId = auditoria[1].Id,
+                    Start = tPlus1Week,
+                    End = tPlus1WeekPlus2,
+                    AvailableSeats = auditoria[0].Capacity
+                },
             };
 
             builder.Entity<Movie>().HasData(movies);
             builder.Entity<Auditorium>().HasData(auditoria);
             builder.Entity<Screening>().HasData(screenings);
+            builder.Entity<IdentityRole>().HasData(
+                new IdentityRole {
+                    Name = "admin",
+                    NormalizedName = "ADMIN"
+                },
+                new IdentityRole {
+                    Name = "staff",
+                    NormalizedName = "STAFF"
+                },
+                new IdentityRole {
+                    Name = "user",
+                    NormalizedName = "USER"
+                }
+            );
         }
     }
 }

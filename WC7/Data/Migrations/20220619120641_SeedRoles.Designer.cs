@@ -10,8 +10,8 @@ using WC7.Data;
 namespace WC7.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220617093936_SeedRanking")]
-    partial class SeedRanking
+    [Migration("20220619120641_SeedRoles")]
+    partial class SeedRoles
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,6 +46,26 @@ namespace WC7.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "7ee633f0-c515-423f-b198-c6ef8c988cad",
+                            ConcurrencyStamp = "2da46e59-3081-47db-b4f7-01bf7ad83301",
+                            Name = "admin"
+                        },
+                        new
+                        {
+                            Id = "72c83d01-f237-40c6-8e35-8886b1c014a2",
+                            ConcurrencyStamp = "0ef164a0-b566-4a18-97c4-25bdcdf22215",
+                            Name = "staff"
+                        },
+                        new
+                        {
+                            Id = "a46db731-c1e1-4404-93cd-89e2d3b4d96e",
+                            ConcurrencyStamp = "0c897893-93a5-4315-a6eb-1f0d7a3af5c9",
+                            Name = "user"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -239,12 +259,12 @@ namespace WC7.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Capacity = 1000
+                            Capacity = 10
                         },
                         new
                         {
                             Id = 2,
-                            Capacity = 2000
+                            Capacity = 50
                         });
                 });
 
@@ -297,6 +317,9 @@ namespace WC7.Data.Migrations
                     b.Property<int>("AuditoriumId")
                         .HasColumnType("int");
 
+                    b.Property<int>("AvailableSeats")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("End")
                         .HasColumnType("datetime2");
 
@@ -319,26 +342,52 @@ namespace WC7.Data.Migrations
                         {
                             Id = 1,
                             AuditoriumId = 1,
-                            End = new DateTime(2022, 6, 17, 13, 39, 36, 109, DateTimeKind.Local).AddTicks(9024),
+                            AvailableSeats = 10,
+                            End = new DateTime(2022, 6, 19, 16, 6, 40, 877, DateTimeKind.Local).AddTicks(9128),
                             MovieId = 1,
-                            Start = new DateTime(2022, 6, 17, 11, 39, 36, 109, DateTimeKind.Local).AddTicks(9024)
+                            Start = new DateTime(2022, 6, 19, 14, 6, 40, 877, DateTimeKind.Local).AddTicks(9128)
                         },
                         new
                         {
                             Id = 2,
                             AuditoriumId = 2,
-                            End = new DateTime(2022, 6, 18, 13, 39, 36, 109, DateTimeKind.Local).AddTicks(9024),
+                            AvailableSeats = 50,
+                            End = new DateTime(2022, 6, 20, 16, 6, 40, 877, DateTimeKind.Local).AddTicks(9128),
                             MovieId = 2,
-                            Start = new DateTime(2022, 6, 18, 11, 39, 36, 109, DateTimeKind.Local).AddTicks(9024)
+                            Start = new DateTime(2022, 6, 20, 14, 6, 40, 877, DateTimeKind.Local).AddTicks(9128)
                         },
                         new
                         {
                             Id = 3,
                             AuditoriumId = 1,
-                            End = new DateTime(2022, 6, 24, 13, 39, 36, 109, DateTimeKind.Local).AddTicks(9024),
+                            AvailableSeats = 10,
+                            End = new DateTime(2022, 6, 26, 16, 6, 40, 877, DateTimeKind.Local).AddTicks(9128),
                             MovieId = 2,
-                            Start = new DateTime(2022, 6, 24, 11, 39, 36, 109, DateTimeKind.Local).AddTicks(9024)
+                            Start = new DateTime(2022, 6, 26, 14, 6, 40, 877, DateTimeKind.Local).AddTicks(9128)
                         });
+                });
+
+            modelBuilder.Entity("WC7.Models.ShoppingCartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ScreeningId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ShoppingCartId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ScreeningId");
+
+                    b.ToTable("ShoppingCartItems");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -403,6 +452,15 @@ namespace WC7.Data.Migrations
                     b.HasOne("WC7.Models.Movie", "Movie")
                         .WithMany()
                         .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WC7.Models.ShoppingCartItem", b =>
+                {
+                    b.HasOne("WC7.Models.Screening", "Screening")
+                        .WithMany()
+                        .HasForeignKey("ScreeningId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

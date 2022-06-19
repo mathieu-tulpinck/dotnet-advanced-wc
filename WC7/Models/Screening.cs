@@ -20,16 +20,6 @@ namespace WC7.Models
             _context = context;
         }
 
-        public Screening(int id, int auditoriumId, int movieId, DateTime start, DateTime end, int availableSeats)
-        {
-            Id = id;
-            AuditoriumId = auditoriumId;
-            MovieId = movieId;
-            Start = start;
-            End = end;
-            AvailableSeats = availableSeats;
-        }
-
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 

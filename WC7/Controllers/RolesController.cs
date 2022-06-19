@@ -25,7 +25,7 @@ namespace WC7.Controllers
 
         public IActionResult Create()
         {
-            return View(new IdentityRole());
+            return View();
         }
 
         [HttpPost]

@@ -10,8 +10,8 @@ using WC7.Data;
 namespace WC7.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220617082339_Seed")]
-    partial class Seed
+    [Migration("20220619120907_SeedRolesNormalized")]
+    partial class SeedRolesNormalized
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,6 +46,29 @@ namespace WC7.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "eabfc65a-892f-4756-8a7b-fca9ba3d70f1",
+                            ConcurrencyStamp = "f08d086b-401b-4a55-8ae3-e2b5c5c06cea",
+                            Name = "admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "e832b3d5-2eb0-4518-af4c-a7323786e092",
+                            ConcurrencyStamp = "7c457e57-16e9-4457-a110-472321386cd6",
+                            Name = "staff",
+                            NormalizedName = "STAFF"
+                        },
+                        new
+                        {
+                            Id = "d356c168-cbea-4601-be0a-78896357c041",
+                            ConcurrencyStamp = "b60941cc-fdad-4e54-b656-56c8f6a861b5",
+                            Name = "user",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -239,12 +262,12 @@ namespace WC7.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Capacity = 1000
+                            Capacity = 10
                         },
                         new
                         {
                             Id = 2,
-                            Capacity = 2000
+                            Capacity = 50
                         });
                 });
 
@@ -282,7 +305,7 @@ namespace WC7.Data.Migrations
                         {
                             Id = 2,
                             DirectorName = "test director 2",
-                            Ranking = (byte)80,
+                            Ranking = (byte)100,
                             Title = "test title 2"
                         });
                 });
@@ -295,6 +318,9 @@ namespace WC7.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AuditoriumId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AvailableSeats")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("End")
@@ -319,26 +345,52 @@ namespace WC7.Data.Migrations
                         {
                             Id = 1,
                             AuditoriumId = 1,
-                            End = new DateTime(2022, 6, 17, 12, 23, 38, 917, DateTimeKind.Local).AddTicks(3741),
+                            AvailableSeats = 10,
+                            End = new DateTime(2022, 6, 19, 16, 9, 7, 238, DateTimeKind.Local).AddTicks(4047),
                             MovieId = 1,
-                            Start = new DateTime(2022, 6, 17, 10, 23, 38, 917, DateTimeKind.Local).AddTicks(3741)
+                            Start = new DateTime(2022, 6, 19, 14, 9, 7, 238, DateTimeKind.Local).AddTicks(4047)
                         },
                         new
                         {
                             Id = 2,
                             AuditoriumId = 2,
-                            End = new DateTime(2022, 6, 18, 12, 23, 38, 917, DateTimeKind.Local).AddTicks(3741),
+                            AvailableSeats = 50,
+                            End = new DateTime(2022, 6, 20, 16, 9, 7, 238, DateTimeKind.Local).AddTicks(4047),
                             MovieId = 2,
-                            Start = new DateTime(2022, 6, 18, 10, 23, 38, 917, DateTimeKind.Local).AddTicks(3741)
+                            Start = new DateTime(2022, 6, 20, 14, 9, 7, 238, DateTimeKind.Local).AddTicks(4047)
                         },
                         new
                         {
                             Id = 3,
                             AuditoriumId = 1,
-                            End = new DateTime(2022, 6, 24, 12, 23, 38, 917, DateTimeKind.Local).AddTicks(3741),
+                            AvailableSeats = 10,
+                            End = new DateTime(2022, 6, 26, 16, 9, 7, 238, DateTimeKind.Local).AddTicks(4047),
                             MovieId = 2,
-                            Start = new DateTime(2022, 6, 24, 10, 23, 38, 917, DateTimeKind.Local).AddTicks(3741)
+                            Start = new DateTime(2022, 6, 26, 14, 9, 7, 238, DateTimeKind.Local).AddTicks(4047)
                         });
+                });
+
+            modelBuilder.Entity("WC7.Models.ShoppingCartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ScreeningId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ShoppingCartId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ScreeningId");
+
+                    b.ToTable("ShoppingCartItems");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -403,6 +455,15 @@ namespace WC7.Data.Migrations
                     b.HasOne("WC7.Models.Movie", "Movie")
                         .WithMany()
                         .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WC7.Models.ShoppingCartItem", b =>
+                {
+                    b.HasOne("WC7.Models.Screening", "Screening")
+                        .WithMany()
+                        .HasForeignKey("ScreeningId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

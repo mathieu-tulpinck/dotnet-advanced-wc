@@ -39,7 +39,7 @@ namespace WC7
             services.AddHttpContextAccessor();
 
             // ShoppingCart
-            services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCart(sp));
+            services.AddScoped(sp => ShoppingCart.GetCart(sp));
 
         }
 

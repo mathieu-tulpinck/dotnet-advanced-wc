@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WC7.Data;
 
 namespace WC7.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220619114140_Seed")]
+    partial class Seed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,29 +46,6 @@ namespace WC7.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "eabfc65a-892f-4756-8a7b-fca9ba3d70f1",
-                            ConcurrencyStamp = "f08d086b-401b-4a55-8ae3-e2b5c5c06cea",
-                            Name = "admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "e832b3d5-2eb0-4518-af4c-a7323786e092",
-                            ConcurrencyStamp = "7c457e57-16e9-4457-a110-472321386cd6",
-                            Name = "staff",
-                            NormalizedName = "STAFF"
-                        },
-                        new
-                        {
-                            Id = "d356c168-cbea-4601-be0a-78896357c041",
-                            ConcurrencyStamp = "b60941cc-fdad-4e54-b656-56c8f6a861b5",
-                            Name = "user",
-                            NormalizedName = "USER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -344,27 +323,27 @@ namespace WC7.Data.Migrations
                             Id = 1,
                             AuditoriumId = 1,
                             AvailableSeats = 10,
-                            End = new DateTime(2022, 6, 19, 16, 9, 7, 238, DateTimeKind.Local).AddTicks(4047),
+                            End = new DateTime(2022, 6, 19, 15, 41, 39, 892, DateTimeKind.Local).AddTicks(4153),
                             MovieId = 1,
-                            Start = new DateTime(2022, 6, 19, 14, 9, 7, 238, DateTimeKind.Local).AddTicks(4047)
+                            Start = new DateTime(2022, 6, 19, 13, 41, 39, 892, DateTimeKind.Local).AddTicks(4153)
                         },
                         new
                         {
                             Id = 2,
                             AuditoriumId = 2,
                             AvailableSeats = 50,
-                            End = new DateTime(2022, 6, 20, 16, 9, 7, 238, DateTimeKind.Local).AddTicks(4047),
+                            End = new DateTime(2022, 6, 20, 15, 41, 39, 892, DateTimeKind.Local).AddTicks(4153),
                             MovieId = 2,
-                            Start = new DateTime(2022, 6, 20, 14, 9, 7, 238, DateTimeKind.Local).AddTicks(4047)
+                            Start = new DateTime(2022, 6, 20, 13, 41, 39, 892, DateTimeKind.Local).AddTicks(4153)
                         },
                         new
                         {
                             Id = 3,
                             AuditoriumId = 1,
                             AvailableSeats = 10,
-                            End = new DateTime(2022, 6, 26, 16, 9, 7, 238, DateTimeKind.Local).AddTicks(4047),
+                            End = new DateTime(2022, 6, 26, 15, 41, 39, 892, DateTimeKind.Local).AddTicks(4153),
                             MovieId = 2,
-                            Start = new DateTime(2022, 6, 26, 14, 9, 7, 238, DateTimeKind.Local).AddTicks(4047)
+                            Start = new DateTime(2022, 6, 26, 13, 41, 39, 892, DateTimeKind.Local).AddTicks(4153)
                         });
                 });
 
